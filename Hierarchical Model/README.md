@@ -1,5 +1,5 @@
 # Bayesian-Inference
-This is s collection of tools for doing bayesian inference on parameters of the chemical reaction 0-> X -> 0
+This is a collection of tools for doing bayesian inference on parameters of the chemical reaction 0-> X -> 0
 with birth parameter A and death parameter B.
 Contents:
 1. ssa.ipynb performs stochastic simulation algorithm
