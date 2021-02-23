@@ -165,6 +165,16 @@ def int_gammainc(alpha,beta):
     return q
 
 def MH_alpha(A,alpha,beta,a_alpha,b_alpha,r):
+    '''
+    Performs Metropolis-Hastings sampling for the alpha delay parameter
+    :praram A: current A_n sample for individual n
+    :param alpha: current alpha_n sample for individual n
+    :param beta: current beta_n sample for individual n
+    :param a_alpha: current a_alpha sample
+    :param b_alpha: current b_alpha sample
+    :param r: matrix containing the number of births and deaths in every subinterval for individual n
+    :return: k
+    '''
     alpha_prop=-1
     while alpha_prop<0:
         alpha_prop=alpha+np.random.normal(0,var_alpha)
@@ -178,6 +188,16 @@ def MH_alpha(A,alpha,beta,a_alpha,b_alpha,r):
     return k
 
 def MH_beta(A,alpha,beta,a_beta,b_beta,r):
+    '''
+    Performs Metropolis-Hastings sampling for the beta delay parameter
+    :praram A: current A_n sample for individual n
+    :param alpha: current alpha_n sample for individual n
+    :param beta: current beta_n sample for individual n
+    :param a_alpha: current a_alpha sample
+    :param b_alpha: current b_alpha sample
+    :param r: matrix containing the number of births and deaths in every subinterval for individual n
+    :return: k
+    '''
     beta_prop=np.random.gamma(beta*tune_beta,1./tune_beta)
     a=beta_lik(alpha,beta_prop,A,a_beta,b_beta,r,beta)   
     b=beta_lik(alpha,beta,A,a_beta,b_beta,r,beta_prop)
@@ -189,6 +209,16 @@ def MH_beta(A,alpha,beta,a_beta,b_beta,r):
     return k
 
 def MH_r(A,B,r,kappa,x,j):
+    '''
+    Performs Metropolis-Hastings sampling for number of birth reactions completed in every interval for invidual n
+    :param A: current A_n sample for individual n
+    :param B: current B_n sample for individual n
+    :param r: matrix containing the number of births and deaths in every subinterval for individual n
+    :param kappa: average completion propensity on the time interval [j,j+1]
+    :param x: vector [x_i, x_i+1], the molecular counts at the time j and time j+1 
+    :param j: time index
+    :return: k
+    '''
     param=1+(r[0]**2)/tune                 #tuning parameter suggested in Boy's paper 
     r_vprop=np.array([-1,-1]) 
     while r_vprop[0]<0 or r_vprop[1]<0:
@@ -222,6 +252,13 @@ def accept_rate_react(x,r,prop,A,B,jump,kappa):        #acceptance rate for reac
     return rate
 
 def MH_a_A(A,a_A,b_A):
+    '''
+    Performs Metropolis-Hastings sampling for the hyperparameter a_A
+    :praram A: collection of current A_n sample for all individuals
+    :param a_alpha: current a_alpha sample
+    :param b_alpha: current b_alpha sample
+    :return: k
+    '''
     a_Aprop=-1
     while a_Aprop<0:
         a_Aprop=a_A+np.random.normal(0,var_a_A)
@@ -235,6 +272,13 @@ def MH_a_A(A,a_A,b_A):
     return k
 
 def MH_a_delay(param,a_param,b_param):
+    '''
+    Performs Metropolis-Hastings sampling for the hyperparameter a_alpha or a_beta
+    :param param: collection of either the current alpha_n or beta_n sample for all individuals
+    :param a_param: current a_alpha sample
+    :param b_alpha: current b_alpha sample
+    :return: k
+    '''
     a_prop=-1
     while a_prop<0:
         a_prop=a_param+np.random.normal(0,var_a_alphabeta)
