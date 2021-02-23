@@ -60,8 +60,13 @@ b_delay[0]=1
 
 # In[4]:
 
-def init_reaction(x,s):         #initialize reaction numbers           
-    q=np.zeros([2,s-1])
+def init_reaction(x):         #initialize reaction numbers  
+    '''
+    Initializes the number of completed reactions between all time intervals for an individual n 
+    :param x: subsampled trajectory of molecular counts for individual n
+    :return: r
+    '''  
+    q=np.zeros([2,I-1])
     for i in range(s-1):
         if x[i+1]-x[i]>0:
             q[0,i]=np.floor((4/3)*(x[i+1]-x[i]))
@@ -73,6 +78,19 @@ def init_reaction(x,s):         #initialize reaction numbers
     return r  
 
 def accept_rate_react(x,r,prop,i,A,B,jump,b,delay):        #acceptance rate for reaction numbers
+     '''
+    Computes the acceptance rate for the number of completed reactions at a given time interval for a specific individual n
+    :param x: vector [x_i, x_i+1], the molecular counts at the time i and time i+1
+    :param r: vector [r_birth, r_death] the current number of completed reactions of each type 
+    :param prop: vector [prop_r_birth, prop_r_death] the proposed number of completed reactions of each type 
+    :param i: time index
+    :param A: latest sample for A_n 
+    :param B: latest sample for B_n
+    :param jump: sampled from the Skellam distribution that serves to augment the current reaction numbers
+    :param b: tuning parameter 
+    :param delay: latest sample for delay_n
+    :return: rate
+    ''' 
     lambda_prop=1+(prop[0]**2)/b
     lambda_cur=1+(r[0]**2)/b
     if i+1<=delay:
@@ -84,11 +102,31 @@ def accept_rate_react(x,r,prop,i,A,B,jump,b,delay):        #acceptance rate for 
     rate=np.minimum(1,np.exp(prop_like-current_like))
     return rate
 
-def a_lik(A,a,b,prev,var_param):           #a_A and a_delay likelihood function 
-    q=-M*math.lgamma(a)+M*a*np.log(b)+(a-1)*np.sum(np.log(A))+norm.logcdf(prev/var_param,0,1)
+def a_lik(param,a,b,prev,var_param):           #a_A and a_delay likelihood function 
+    '''
+    Likelihood function for the hyperparameters a_A or a_delay
+    :param param: collection of current A_n or delay_n sample for all individuals
+    :param a: for the numerator of the MH acceptance probability, this is the proposed value, for the denominator this is the current value of a
+    :param b: current b_A or b_delay sample
+    :param prev: for the numerator of the MH acceptance probability, this is the current value, for the denominator this is the proposed value of a
+    :param var_param: variance of the Gaussian proposal kernel 
+    :return: q
+    '''
+    q=-M*math.lgamma(a)+M*a*np.log(b)+(a-1)*np.sum(np.log(param))+norm.logcdf(prev/var_param,0,1)
     return q
 
 def delay_lik(delay,A,a,b,I,r,prev):      #delay loglikelihood 
+    '''
+    Likelihood function for the delay parameter for individual n
+    :param delay: current delay_n sample for all individual n
+    :param A: latest sample for A_n 
+    :param a: latest sample for a_delay
+    :param b: latest sample for b_delay
+    :param I: observation window boundary ##can be removed since I is a global variable
+    :param r: vector of number of birth reactions for all time subinterval for individual n
+    :param prev: for the numerator of the MH acceptance probability, this is the proposed value, for the denominator this is the current value of delay_n
+    :return: q
+    '''
     sum_kappa=0
     sum_log_kappa=0
     for jj in range(I-1):
@@ -103,6 +141,15 @@ def delay_lik(delay,A,a,b,I,r,prev):      #delay loglikelihood
     return q
 
 def MH_delay(A,delay,a_delay,b_delay,r):
+    '''
+    Performs Metropolis-Hastings sampling for the delay parameter for individual n
+    :param A: latest sample for A_n 
+    :param delay: latest delay_n sample
+    :param a: latest sample for a_delay
+    :param b: latest sample for b_delay
+    :param r: vector of number of birth reactions for all time subinterval for individual n
+    :return: k
+    '''
     delay_prop=-1
     while delay_prop<0:
         delay_prop=delay+np.random.normal(0,var_delay)
@@ -117,6 +164,13 @@ def MH_delay(A,delay,a_delay,b_delay,r):
     return k
 
 def MH_a_A(A,a_A,b_A):
+    '''
+    Performs Metropolis-Hastings sampling for the hyperparameter a_A
+    :praram A: collection of current A_n sample for all individuals
+    :param a_alpha: current a_alpha sample
+    :param b_alpha: current b_alpha sample
+    :return: k
+    '''
     a_Aprop=-1
     while a_Aprop<0:
         a_Aprop=a_A+np.random.normal(0,var_a_A)
@@ -130,6 +184,13 @@ def MH_a_A(A,a_A,b_A):
     return k
 
 def MH_a_delay(delay,a_delay,b_delay):
+    '''
+    Performs Metropolis-Hastings sampling for the hyperparameter a_delay
+    :praram delay: collection of current delay_n sample for all individuals
+    :param a_delay: current a_delay sample
+    :param b_delay: current b_delay sample
+    :return: k
+    '''
     a_delayprop=-1
     while a_delayprop<0:
         a_delayprop=a_delay+np.random.normal(0,var_a_delay)
@@ -144,7 +205,7 @@ def MH_a_delay(delay,a_delay,b_delay):
 # In[5]:
 #initialize number of reactions
 for s in range(M):
-    r[:,:,s]= init_reaction(x[:,s],I)
+    r[:,:,s]= init_reaction(x[:,s])
 
 
 # In[6]:
