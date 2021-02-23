@@ -167,7 +167,7 @@ def int_gammainc(alpha,beta):
 def MH_alpha(A,alpha,beta,a_alpha,b_alpha,r):
     '''
     Performs Metropolis-Hastings sampling for the alpha delay parameter
-    :praram A: current A_n sample for individual n
+    :param A: current A_n sample for individual n
     :param alpha: current alpha_n sample for individual n
     :param beta: current beta_n sample for individual n
     :param a_alpha: current a_alpha sample
@@ -190,11 +190,11 @@ def MH_alpha(A,alpha,beta,a_alpha,b_alpha,r):
 def MH_beta(A,alpha,beta,a_beta,b_beta,r):
     '''
     Performs Metropolis-Hastings sampling for the beta delay parameter
-    :praram A: current A_n sample for individual n
+    :param A: current A_n sample for individual n
     :param alpha: current alpha_n sample for individual n
     :param beta: current beta_n sample for individual n
-    :param a_alpha: current a_alpha sample
-    :param b_alpha: current b_alpha sample
+    :param a_beta: current a_beta sample
+    :param b_beta: current b_beta sample
     :param r: matrix containing the number of births and deaths in every subinterval for individual n
     :return: k
     '''
@@ -254,7 +254,7 @@ def accept_rate_react(x,r,prop,A,B,jump,kappa):        #acceptance rate for reac
 def MH_a_A(A,a_A,b_A):
     '''
     Performs Metropolis-Hastings sampling for the hyperparameter a_A
-    :praram A: collection of current A_n sample for all individuals
+    :param A: collection of current A_n sample for all individuals
     :param a_alpha: current a_alpha sample
     :param b_alpha: current b_alpha sample
     :return: k
@@ -276,7 +276,7 @@ def MH_a_delay(param,a_param,b_param):
     Performs Metropolis-Hastings sampling for the hyperparameter a_alpha or a_beta
     :param param: collection of either the current alpha_n or beta_n sample for all individuals
     :param a_param: current a_alpha sample
-    :param b_alpha: current b_alpha sample
+    :param b_param: current b_alpha sample
     :return: k
     '''
     a_prop=-1
