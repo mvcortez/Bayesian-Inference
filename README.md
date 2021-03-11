@@ -3,7 +3,7 @@
  
  fnorm.py - performs sampling for a model with distributed birth delays. The delay hyperpriors are set to be an informative folded normal distribution.
  
- mdip.py - performs sampling for a model with distributed birth delays. The delay hyperprios are set to be unformative Maximum Data Information Prior (MDIP).
+ mdip.py - performs sampling for a model with distributed birth delays. The delay hyperpriors are set to be uninformative Maximum Data Information Prior (MDIP).
  
  nonhier_dist - nonhierarchical counterpart of mdip.py
  
