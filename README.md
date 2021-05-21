@@ -1,4 +1,6 @@
 # Bayesian-Inference
+These are accompanying codes for "Hierarchical Bayesian models for inference in biochemical reactions with delays". 
+
  fixed.py - performs sampling for a hierarchical model with fixed birth delays.
  
  fnorm.py - performs sampling for a model with distributed birth delays. The delay hyperpriors are set as informative folded normal distributions.
