@@ -2,6 +2,7 @@
 These are accompanying codes for "Hierarchical Bayesian models for inference in biochemical reactions with delays". 
 
 Samplers (Coded sampling Algorithms found in paper):
+Before running the samplers, make sure that the necessary csv files (trajectory and B values) are in the same folder as the sampler code. Before running code, change filenames of the csv data files as necessary.  
  1. fixed.py - performs sampling for a hierarchical model with fixed birth delays.
  2. fnorm.py - performs sampling for a model with distributed birth delays. The delay hyperpriors are set as informative folded normal distributions.
  3. mdip.py - performs sampling for a model with distributed birth delays. The delay hyperpriors are set as uninformative Maximum Data Information Prior (MDIP).
