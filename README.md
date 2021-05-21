@@ -11,4 +11,4 @@
  
  pooled_nonhier_dist - nonhierarchical counterpart of mdip.py but with pooling of data
  
- nonhier_fixed - nonhierarchical counterpart of fixed.py but with pooling of data
+ pooled_nonhier_fixed - nonhierarchical counterpart of fixed.py but with pooling of data
