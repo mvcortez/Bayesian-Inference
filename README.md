@@ -14,6 +14,7 @@ Samplers (Coded sampling Algorithms found in paper):
 Data (Raw Data)
 
 Analysis (Performs visualization of samples and gives basic statistics):
- 1. quick_analysis_fixed.ipynb - performs basic visualization of samples from posterior obtained using the fixed delay model  
- 2. Gen_figures.ipynb - generate the figures found in the paper and its supplementary material
+ 1. quick_analysis_distributed.ipynb - performs basic visualization of samples from posterior obtained using the distributed delay model
+ 2. quick_analysis_fixed.ipynb - performs basic visualization of samples from posterior obtained using the fixed delay model  
+ 3. Gen_figures.ipynb - generate the figures found in the paper and its supplementary material
  
