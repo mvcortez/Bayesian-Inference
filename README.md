@@ -14,7 +14,7 @@ Before running the samplers, make sure that the necessary csv files (trajectory 
 
 Data (Raw Data and Implementation Results):
  1. Raw Data
- 2. Implementation Results
+ 2. Implementation Results - results of model implementation found in the paper and supplementary material. 
 
 Analysis (Performs visualization of samples and gives basic statistics):
  1. quick_analysis_distributed.ipynb - performs basic visualization of samples from posterior obtained using the distributed delay model
